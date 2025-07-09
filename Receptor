@@ -1,0 +1,54 @@
+#include <SPI.h>
+#include <nRF24L01.h>
+#include <RF24.h>
+
+// Pines CE y CSN del módulo NRF24L01
+#define CE_PIN 9
+#define CSN_PIN 10
+
+// Dirección del canal de comunicación
+byte direccion[5] = { 'T', 'e', 'x', 'a', 's' };
+
+// Crear objeto radio
+RF24 radio(CE_PIN, CSN_PIN);
+
+// Vector para almacenar los datos recibidos
+float datos[3];
+
+void setup() {
+  // Inicializar comunicación con el módulo
+  radio.begin();
+
+  // Inicializar comunicación serie
+  Serial.begin(9600);
+
+  // Abrir el canal de lectura
+  radio.openReadingPipe(1, direccion);
+
+  // Comenzar a escuchar por el canal
+  radio.startListening();
+}
+
+void loop() {
+  // Verificar si hay datos disponibles
+  if (radio.available()) {
+    // Leer los datos entrantes
+    radio.read(datos, sizeof(datos));
+
+    // Mostrar datos en el monitor serie
+    Serial.print("Dato0 = ");
+    Serial.print(datos[0]);
+    Serial.print(" V, ");
+
+    Serial.print("Dato1 = ");
+    Serial.print(datos[1]);
+    Serial.print(" ms, ");
+
+    Serial.print("Dato2 = ");
+    Serial.println(datos[2]);
+  } else {
+    Serial.println("No hay datos de radio disponibles");
+  }
+
+  delay(1000);  // Esperar 1 segundo
+}
