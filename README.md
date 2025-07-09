@@ -1,6 +1,6 @@
 # Epsol
 
-### 1. Arduino Nano Clon
+### 1. Arduino Nano generico 
 - Usa chip **CH340** para la comunicación USB.
 - ⚠️ **En Windows:** es necesario instalar el driver CH340.
 - ✅ **En macOS y Linux:** generalmente no se necesita instalar nada extra.
